@@ -1,0 +1,5 @@
+take a number x from input
+
+verify if x is bigger than 10
+    if y, show "big number"
+    or show "small number"

@@ -1,0 +1,6 @@
+read x
+if x > 10 {
+    show "big number"
+} else {
+    show "small number"
+}
