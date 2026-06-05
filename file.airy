@@ -1,5 +1,52 @@
-take a number x from input
+프로그램 시작
 
-verify if x is bigger than 10
-    if y, show "big number"
-    or show "small number"
+변수선언 甲
+입력 甲
+
+변수선언 乙
+입력 乙
+
+조건 甲 > 乙:
+    출력 "A is bigger"
+아니면:
+    출력 "B is bigger or equal"
+
+변수선언 和
+설정 和 甲 + 乙
+출력 和
+
+변수선언 差
+설정 差 甲 - 乙
+출력 差
+
+변수선언 积
+설정 积 甲 * 乙
+출력 积
+
+조건 乙 != 0:
+    변수선언 商
+    설정 商 甲 / 乙
+    출력 商
+아니면:
+    출력 "Impartire imposibila"
+
+변수선언 이름
+입력 이름
+출력 이름
+
+변수선언 나이
+입력 나이
+
+조건 나이 >= 18:
+    출력 "Adult"
+아니면:
+    출력 "Minor"
+
+변수선언 제곱기준
+설정 제곱기준 5
+
+변수선언 제곱
+설정 제곱 제곱기준 * 제곱기준
+출력 제곱
+
+프로그램 종료

@@ -1,6 +1,53 @@
-read x
-if x > 10 {
-    show "big number"
+set 甲
+read 甲
+
+set 乙
+read 乙
+
+if 甲 > 乙 {
+    show "A is bigger"
 } else {
-    show "small number"
+    show "B is bigger or equal"
 }
+
+set 和
+和 = 甲 + 乙
+show 和
+
+set 差
+差 = 甲 - 乙
+show 差
+
+set 积
+积 = 甲 * 乙
+show 积
+
+if 乙 != 0 {
+    set 商
+    商 = 甲 / 乙
+    show 商
+} else {
+    show "Impartire imposibila"
+}
+
+set 이름
+read 이름
+show 이름
+
+set 나이
+read 나이
+
+if 나이 >= 18 {
+    show "Adult"
+} else {
+    show "Minor"
+}
+
+set 제곱기준
+제곱기준 = 5
+
+set 제곱
+제곱 = 제곱기준 * 제곱기준
+show 제곱
+
+return
