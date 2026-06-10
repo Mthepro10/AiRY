@@ -16,12 +16,10 @@ pub enum Token {
     Return,
 
     Identifier(String),
-
     Integer(i64),
     Float(f64),
     Boolean(bool),
-
-    String(String),
+    StringLit(String),
 
     Plus,
     Minus,
@@ -34,27 +32,26 @@ pub enum Token {
     BitXor,
     BitNot,
 
-    Assign,
+    Assign, // =
 
-    Equal,
-    NotEqual,
+    Equal,        // ==
+    NotEqual,     // !=
+    Greater,      // >
+    Less,         // <
+    GreaterEqual, // >=
+    LessEqual,    // <=
 
-    Greater,
-    Less,
-    GreaterEqual,
-    LessEqual,
+    And, // &&
+    Or,  // ||
+    Not, // !
 
-    And,
-    Or,
-    Not,
+    LParen, // (
+    RParen, // )
+    LBrace, // {
+    RBrace, // }
 
-    LParen,
-    RParen,
-
-    LBrace,
-    RBrace,
-
-    Comma,
+    Comma,   // ,
+    Newline, // \n
 
     EOF,
 }

@@ -7,6 +7,37 @@ pub enum Value {
 }
 
 #[derive(Debug, Clone, PartialEq)]
+pub enum BinaryOp {
+    Plus,
+    Minus,
+    Star,
+    Slash,
+    Percent,
+
+    BitAnd,
+    BitOr,
+    BitXor,
+
+    Equal,
+    NotEqual,
+    Greater,
+    Less,
+    GreaterEqual,
+    LessEqual,
+
+    And,
+    Or,
+}
+
+#[derive(Debug, Clone, PartialEq)]
+pub enum UnaryOp {
+    Minus,  // -x
+    Not,    // !x
+    BitNot, // ~x
+}
+
+
+#[derive(Debug, Clone, PartialEq)]
 pub enum Expr {
     Literal(Value),
 
@@ -22,37 +53,8 @@ pub enum Expr {
         op: UnaryOp,
         expr: Box<Expr>,
     },
-}
 
-#[derive(Debug, Clone, PartialEq)]
-pub enum BinaryOp {
-    Plus,
-    Minus,
-    Star,
-    Slash,
-    Percent,
-
-    BitAnd,
-    BitOr,
-    BitXor,
-
-    Equal,
-    NotEqual,
-
-    Greater,
-    Less,
-    GreaterEqual,
-    LessEqual,
-
-    And,
-    Or,
-}
-
-#[derive(Debug, Clone, PartialEq)]
-pub enum UnaryOp {
-    Minus,
-    Not,
-    BitNot,
+    Perform(Box<Expr>),
 }
 
 pub type Block = Vec<Statement>;
@@ -74,12 +76,6 @@ pub enum Statement {
     },
 
     Show {
-        value: Expr,
-    },
-
-    Perform {
-        name: String,
-        op: BinaryOp,
         value: Expr,
     },
 
@@ -106,6 +102,7 @@ pub enum Statement {
 
     Return,
 }
+
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct Program {
