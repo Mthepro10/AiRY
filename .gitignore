@@ -1,5 +1,5 @@
-# Rust
-/target
+.env
 
-# Python
-__pycache__/
+/target/
+
+**/__pycache__/
