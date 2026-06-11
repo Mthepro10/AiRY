@@ -12,8 +12,7 @@ def main():
 
     with open("ai_compile.txt", "w", encoding="utf-8") as f:
         f.write(result)
-
-    '''
+    
     command = ["cargo", "run", "--release", "--", "interpreter/main.rs"]
     process = subprocess.run(command, capture_output=True, text=True)
 
@@ -21,7 +20,6 @@ def main():
         print(process.stdout)
     else :
         print(process.stderr)
-    '''
 
 
 if __name__ == "__main__":

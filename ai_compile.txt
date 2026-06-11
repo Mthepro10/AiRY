@@ -4,7 +4,7 @@ read n
 loop i 0 perform n - 2 {
     set temp perform fib_a + fib_b
     fib_a = fib_b
-    fib_b = temp
+    fib_b = perform temp
 }
 infloop fib_a != 0 && fib_b != 0 {
     if fib_a > fib_b {
