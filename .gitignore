@@ -3,5 +3,3 @@
 
 # Python
 __pycache__/
-*.pyc
-*.pyo
