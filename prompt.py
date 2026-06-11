@@ -74,8 +74,6 @@ identation - AiRY uses indentation to define blocks of code. Each block of code 
 - arithmetic/binary operations (+, -, *, /, %, ^, |, &) must always be executed using perform and the result must be assigned or used in an expression (e.g., x = perform ..., set x perform ..., show perform ...)
 - boolean operations (&&, ||, !, ==, !=, >, <, >=, <=) do not require perform
 - boolean expressions may be used directly in assignments and conditions
-
-
 ]
 
 Rules:

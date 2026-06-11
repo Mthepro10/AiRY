@@ -1,3 +1,54 @@
-set x perform 5 & 8
-x = perform 7 + 2
-perform x + 2
+set fib_a 0
+set fib_b 1
+read n
+loop i 0 perform n - 2 {
+    set temp perform fib_a + fib_b
+    fib_a = fib_b
+    fib_b = temp
+}
+infloop fib_a != 0 && fib_b != 0 {
+    if fib_a > fib_b {
+        fib_a = perform fib_a % fib_b
+    } else {
+        fib_b = perform fib_b % fib_a
+    }
+}
+if fib_a == 0 {
+    show fib_b
+} else {
+    show fib_a
+}
+set num fib_b
+set is_prime 1
+if num < 2 {
+    is_prime = 0
+} else {
+    set d 2
+    infloop perform d * d <= num {
+        if perform num % d == 0 {
+            is_prime = 0
+            break
+        }
+        d = perform d + 1
+    }
+}
+set cx fib_b
+set steps 0
+infloop cx != 1 {
+    if perform cx % 2 == 0 {
+        cx = perform cx / 2
+    } else {
+        cx = perform perform cx * 3 + 1
+    }
+    steps = perform steps + 1
+}
+show steps
+set bits 0
+set mask 1
+loop i 0 64 {
+    if perform fib_b & mask != 0 {
+        bits = perform bits + 1
+    }
+    mask = perform mask * 2
+}
+show bits
