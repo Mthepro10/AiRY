@@ -1,4 +1,23 @@
-set x
-x = 3
-x = perform x + 1 + (1 + 12) * 8
-show x
+set sum 0
+set count 0
+
+infloop true {
+    read n
+    if n == 0 {
+        break
+    }
+    if n > 0 {
+        sum = perform sum + n
+        count = perform count + 1
+    }
+}
+
+show count
+show sum
+
+if count > 0 {
+    set average perform sum / count
+    show average
+} else {
+    show "No positive numbers entered"
+}

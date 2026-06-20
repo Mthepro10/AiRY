@@ -1,33 +1,31 @@
-Set sum = 0
-Set count = 0
+set sum 0
+set count 0
 
-Repeat forever
+infloop true
+{
+    read n
 
-Read number
+    if n == 0
+    {
+        break
+    }
 
-If number == 0 Then
-    Break
-EndIf
+    if n > 0
+    {
+        assign sum sum + n
+        assign count count + 1
+    }
+}
 
-If number > 0 Then
-    sum = sum + number
-    count = count + 1
-EndIf
+show count
+show sum
 
-EndRepeat
-
-Show "Count:"
-Show count
-
-Show "Sum:"
-Show sum
-
-If count > 0 Then
-average = sum / count
-
-Show "Average:"
-Show average
-
-Else
-Show "No positive numbers entered"
-EndIf
+if count > 0
+{
+    set average sum / count
+    show average
+}
+else
+{
+    show "No positive numbers entered"
+}
