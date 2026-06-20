@@ -103,6 +103,7 @@ Rules:
 Do not continue parsing, do not generate partial output, do not include previously processed instructions.
 
 Rules of human writing(better understanding of the input code):
+- paranthese operations are supported, like to add to x the operation of 1+(1+1)*8 you can write "x = perform x + 1 + (1 + 1) * 8
 - users may write code in a conversational style, like "I want to set x to 5" instead of "set x 5"
 - users may use different words to refer to the same instruction, like "declare a variable" instead of "set", or "output" instead of "show"
 - users may use pronouns like "it" or "that variable" to refer to previously defined variables, and you should infer the referenced variable when it is unambiguous

@@ -16,9 +16,9 @@ def main():
     command = ["cargo", "run", "--release", "--", "interpreter/main.rs"]
     process = subprocess.run(command, capture_output=True, text=True)
 
-    if process.returncode == 0 :
+    if process.stdout:
         print(process.stdout)
-    else :
+    if process.stderr:
         print(process.stderr)
 
 
