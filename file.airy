@@ -1,3 +1,33 @@
-set x
-x = 3
-add to x 1+1+1 add also * 8 but 1+1 in brackets ?should be exactly like this 1+1+1, and operation like this 1+(1+12)*8?
+Set sum = 0
+Set count = 0
+
+Repeat forever
+
+Read number
+
+If number == 0 Then
+    Break
+EndIf
+
+If number > 0 Then
+    sum = sum + number
+    count = count + 1
+EndIf
+
+EndRepeat
+
+Show "Count:"
+Show count
+
+Show "Sum:"
+Show sum
+
+If count > 0 Then
+average = sum / count
+
+Show "Average:"
+Show average
+
+Else
+Show "No positive numbers entered"
+EndIf

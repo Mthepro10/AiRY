@@ -32,26 +32,26 @@ pub enum Token {
     BitXor,
     BitNot,
 
-    Assign, // =
+    Assign, 
 
-    Equal,        // ==
-    NotEqual,     // !=
-    Greater,      // >
-    Less,         // <
-    GreaterEqual, // >=
-    LessEqual,    // <=
+    Equal,        
+    NotEqual,     
+    Greater,      
+    Less,         
+    GreaterEqual, 
+    LessEqual,    
 
-    And, // &&
-    Or,  // ||
-    Not, // !
+    And, 
+    Or,  
+    Not, 
 
-    LParen, // (
-    RParen, // )
-    LBrace, // {
-    RBrace, // }
+    LParen, 
+    RParen, 
+    LBrace, 
+    RBrace, 
 
-    Comma,   // ,
-    Newline, // \n
+    Comma,   
+    Newline, 
 
     EOF,
 }

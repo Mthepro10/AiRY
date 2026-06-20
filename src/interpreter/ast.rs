@@ -31,9 +31,9 @@ pub enum BinaryOp {
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum UnaryOp {
-    Minus,  // -x
-    Not,    // !x
-    BitNot, // ~x
+    Minus,  
+    Not,    
+    BitNot, 
 }
 
 

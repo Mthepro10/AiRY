@@ -106,7 +106,7 @@ impl Parser {
     }
 
     fn show_statement(&mut self) -> Result<Statement, String> {
-        self.advance(); // consume 'show'
+        self.advance(); 
         let value = self.expr()?;
         Ok(Statement::Show { value })
     }
@@ -126,7 +126,7 @@ impl Parser {
     }
 
     fn if_statement(&mut self) -> Result<Statement, String> {
-        self.advance(); // consume 'if'
+        self.advance(); 
 
         let condition = self.expr()?;
         let body = self.block()?;
@@ -340,7 +340,7 @@ impl Parser {
             Token::StringLit(s) => { self.advance(); Ok(Expr::Literal(Value::String(s))) }
             Token::Identifier(name) => { self.advance(); Ok(Expr::Identifier(name)) }
             Token::LParen => {
-                self.advance(); // consume '('
+                self.advance(); 
                 let expr = self.expr()?;
                 if !self.consume(&Token::RParen) {
                     return Err(format!("Expected ')' after expression, got {:?}", self.peek()));
