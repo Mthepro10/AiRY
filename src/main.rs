@@ -6,7 +6,7 @@ use crate::interpreter::parser::Parser;
 use std::fs;
 
 fn main() {
-    let source = fs::read_to_string("ai_compile.txt").expect("Failed to read ai_compile.txt");
+    let source = fs::read_to_string("code_wr.airy").expect("Failed to read code_wr.airy");
 
     let mut lexer = Lexer::new(source);
 

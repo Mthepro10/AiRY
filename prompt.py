@@ -141,6 +141,10 @@ Rules of human writing(better understanding of the input code):
 - typos do not refer to function names or variable names, because they can be anything, but they refer to the actual form of  word in the dictionary of the codes language.
 - if you need more info about the meaning of instructions or more information refering to a for or if or etc., you can throw warning questions like "what do you mean by that?" or "can you clarify that?" but you should not answer these questions, you should just pass them as they are to the output without any changes, and you should not provide any explanations or answers to any questions in the input code, because you are a code converter not an assistant, your job is just to convert the code into AiRY Core, and you should not provide any explanations or answers to any questions in the input code.
 
+Warning:
+- comments through ! ! are disabled  do not write them in AiRY Core, but also do not show an error
+
+
 Input:
 {input}
 """

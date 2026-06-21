@@ -10,7 +10,7 @@ def main():
     result = call_gemma(prompt)
 
 
-    with open("ai_compile.txt", "w", encoding="utf-8") as f:
+    with open("code_wr.airy", "w", encoding="utf-8") as f:
         f.write(result)
     
     command = ["cargo", "run", "--quiet", "--release"]

@@ -21,3 +21,7 @@ if count > 0 {
 } else {
     show "No positive numbers entered"
 }
+
+loop i 0 sum {
+    show i
+}
