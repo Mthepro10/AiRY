@@ -1,40 +1,76 @@
 mod interpreter;
+mod ai;
 
 use crate::interpreter::jit::Jit;
 use crate::interpreter::lexer::Lexer;
 use crate::interpreter::parser::Parser;
 use std::fs;
 
-fn main() {
-    let source = fs::read_to_string("code_wr.airy").expect("Failed to read code_wr.airy");
-
+fn run_compiler(source: String) {
     let mut lexer = Lexer::new(source);
-
     let tokens = match lexer.tokenize() {
-        Ok(tokens) => tokens,
-        Err(err) => {
-            eprintln!("Lexer error: {}", err);
-            return;
-        }
+        Ok(t) => t,
+        Err(e) => { eprintln!("Lexer error: {e}"); return; }
     };
 
     let mut parser = Parser::new(tokens);
-
     let program = match parser.parse() {
-        Ok(program) => program,
-        Err(err) => {
-            eprintln!("Parser error: {}", err);
-            return;
-        }
+        Ok(p) => p,
+        Err(e) => { eprintln!("Parser error: {e}"); return; }
     };
 
     let mut jit = Jit::new();
     match jit.compile_and_run(&program) {
-        Ok(exit_code) => {
-            std::process::exit(exit_code as i32);
+        Ok(code) => std::process::exit(code as i32),
+        Err(e)   => eprintln!("JIT error: {e}"),
+    }
+}
+
+fn main() {
+    let args: Vec<String> = std::env::args().collect();
+
+    match args.get(1).map(|s| s.as_str()) {
+        Some(path) if path.ends_with(".airy") => {
+            // 1. Read natural language file
+            let source = match fs::read_to_string(path) {
+                Ok(s) => s,
+                Err(e) => { eprintln!("Could not read {path}: {e}"); return; }
+            };
+
+            println!("Translating {path} ...");
+            let prompt = ai::prompt::build_prompt(&source);
+            let airy_core = match ai::client::translate(prompt) {
+                Ok(code) => code,
+                Err(e)   => { eprintln!("AI translation failed: {e}"); return; }
+            };
+
+            if let Err(e) = fs::write("code_wr.airy", &airy_core) {
+                eprintln!("Could not write code_wr.airy: {e}");
+                return;
+            }
+            println!("Written to code_wr.airy");
+
+            run_compiler(airy_core);
         }
-        Err(err) => {
-            eprintln!("JIT compile error: {}", err);
+
+        None => {
+            let source = match fs::read_to_string("code_wr.airy") {
+                Ok(s) => s,
+                Err(_) => {
+                    eprintln!("Usage:");
+                    eprintln!("  airy file.airy   — translate via AI then run");
+                    eprintln!("  airy             — run code_wr.airy directly");
+                    return;
+                }
+            };
+            run_compiler(source);
+        }
+
+        Some(other) => {
+            eprintln!("Unknown argument: {other}");
+            eprintln!("Usage:");
+            eprintln!("  airy file.airy   — translate via AI then run");
+            eprintln!("  airy             — run code_wr.airy directly");
         }
     }
 }

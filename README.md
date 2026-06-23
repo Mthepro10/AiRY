@@ -70,6 +70,9 @@ Still searching!!!
 ## UNSUPPORTED THINGS THAT I WANT TO INCLUDE IN THE MAIN LIBRARY
 newline '\n', tab '\t', functions
 
+## AI used
+So for this project I used gemma-4-31B-it, but you can also use other types of agents, cus the prompt isn't made especially for gemma. But be aware that using huggingface consumes a number of your monthly credits from your account. That is why on the future I want to create a AI specially designed for this programming language and free for all.
+
 ## Example of AiRY and AiRY Core translation
 
 ```

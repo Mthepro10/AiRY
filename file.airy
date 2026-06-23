@@ -30,4 +30,4 @@ else
     show "No positive numbers entered"
 }
 
-Create a loop starting from 0 up to sum and display each value. ?the loop shows every numben?
+Create a loop starting from 0 up to sum and display each value. ?the loop shows every number?
