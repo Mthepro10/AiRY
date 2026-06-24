@@ -30,16 +30,16 @@ fn main() {
     let args: Vec<String> = std::env::args().collect();
 
     match args.get(1).map(|s| s.as_str()) {
+
         Some(path) if path.ends_with(".airy") => {
-            // 1. Read natural language file
             let source = match fs::read_to_string(path) {
                 Ok(s) => s,
                 Err(e) => { eprintln!("Could not read {path}: {e}"); return; }
             };
 
             println!("Translating {path} ...");
-            let prompt = ai::prompt::build_prompt(&source);
-            let airy_core = match ai::client::translate(prompt) {
+
+            let airy_core = match ai::client::translate(source) {
                 Ok(code) => code,
                 Err(e)   => { eprintln!("AI translation failed: {e}"); return; }
             };
@@ -48,8 +48,8 @@ fn main() {
                 eprintln!("Could not write code_wr.airy: {e}");
                 return;
             }
-            println!("Written to code_wr.airy");
 
+            println!("Written to code_wr.airy");
             run_compiler(airy_core);
         }
 

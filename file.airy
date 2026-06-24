@@ -27,7 +27,8 @@ if count > 0
 }
 else
 {
-    show "No positive numbers entered"
+    show "
+    "
 }
 
 Create a loop starting from 0 up to sum and display each value. ?the loop shows every number?

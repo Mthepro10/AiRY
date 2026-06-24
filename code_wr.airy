@@ -19,7 +19,8 @@ if count > 0 {
     set average perform sum / count
     show average
 } else {
-    show "No positive numbers entered"
+    show "
+    "
 }
 
 loop i 0 sum {

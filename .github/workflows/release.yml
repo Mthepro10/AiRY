@@ -1,31 +1,62 @@
-name: Build Release Binaries
+name: Build AiRY
 
 on:
-  release:
-    types: [created]
+  push:
+    tags:
+      - "v*"
 
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
-
     strategy:
       matrix:
-        os:
-          - ubuntu-latest
-          - macos-latest
-          - windows-latest
+        os: [ubuntu-latest, macos-latest, windows-latest]
+
+    runs-on: ${{ matrix.os }}
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
 
+      # ── Python ──────────────────────────────────────────
+      - name: Install Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install Python dependencies
+        run: pip install pyinstaller huggingface_hub python-dotenv
+
+      - name: Build Python executable
+        run: pyinstaller --onefile ai_translate.py
+
+      # ── Rust ────────────────────────────────────────────
       - name: Install Rust
-        uses: dtolnay/rust-toolchain@stable
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
 
-      - name: Build release
+      - name: Build Rust executable
         run: cargo build --release
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
+      # ── Combina intr-un singur folder ───────────────────
+      - name: Package (Windows)
+        if: matrix.os == 'windows-latest'
+        run: |
+          mkdir release
+          copy dist\ai_translate.exe release\
+          copy target\release\airy.exe release\
+          copy .env.example release\
+
+      - name: Package (Linux/macOS)
+        if: matrix.os != 'windows-latest'
+        run: |
+          mkdir release
+          cp dist/ai_translate release/
+          cp target/release/airy release/
+          cp .env.example release/
+
+      # ── Upload ──────────────────────────────────────────
+      - name: Upload release
+        uses: actions/upload-artifact@v3
         with:
-          name: binary-${{ matrix.os }}
-          path: target/release/
+          name: airy-${{ matrix.os }}
+          path: release/

@@ -1,82 +1,81 @@
-use serde::{Deserialize, Serialize};
+use crate::ai::prompt::build_prompt;
+use std::process::Command;
 
-const MODEL: &str = "google/gemma-4-31B-it:hf-inference";
-const API_URL: &str = "https://api-inference.huggingface.co/v1/chat/completions";
+fn find_ai_translate() -> std::path::PathBuf {
+    let local = std::path::PathBuf::from(if cfg!(windows) {
+        "ai_translate.exe"
+    } else {
+        "ai_translate"
+    });
 
-#[derive(Serialize)]
-struct Message {
-    role: &'static str,
-    content: String,
-}
-
-#[derive(Serialize)]
-struct Request {
-    model: &'static str,
-    messages: Vec<Message>,
-}
-
-#[derive(Deserialize)]
-struct Response {
-    choices: Vec<Choice>,
-}
-
-#[derive(Deserialize)]
-struct Choice {
-    message: ResponseMessage,
-}
-
-#[derive(Deserialize)]
-struct ResponseMessage {
-    content: String,
-}
-
-fn load_token() -> Result<String, String> {
-    let env = std::fs::read_to_string(".env")
-        .map_err(|_| "Could not read .env file — make sure it exists with HF_TOKEN=...".to_string())?;
-
-    for line in env.lines() {
-        if let Some(value) = line.strip_prefix("HF_TOKEN=") {
-            let token = value.trim().trim_matches('"').to_string();
-            if token.is_empty() {
-                return Err("HF_TOKEN is empty in .env".to_string());
-            }
-            return Ok(token);
-        }
+    if local.exists() {
+        return local;
     }
-    Err("HF_TOKEN not found in .env".to_string())
+
+    let mut exe_dir = std::env::current_exe()
+        .expect("Cannot find current executable")
+        .parent()
+        .expect("Cannot find exe directory")
+        .to_path_buf();
+
+    if cfg!(windows) {
+        exe_dir.push("ai_translate.exe");
+    } else {
+        exe_dir.push("ai_translate");
+    }
+
+    exe_dir
 }
 
-pub fn translate(prompt: String) -> Result<String, String> {
-    let token = load_token()?;
+fn check_env() -> Result<(), String> {
+    let env = std::fs::read_to_string(".env")
+        .map_err(|_| ".env file not found — create one with HF_TOKEN=hf_xxx".to_string())?;
 
-    let body = Request {
-        model: MODEL,
-        messages: vec![Message { role: "user", content: prompt }],
+    let has_token = env.lines().any(|l| {
+        l.starts_with("HF_TOKEN=") && l.len() > "HF_TOKEN=".len()
+    });
+
+    if !has_token {
+        return Err("HF_TOKEN not found or empty in .env".to_string());
+    }
+
+    Ok(())
+}
+
+pub fn translate(source: String) -> Result<String, String> {
+    check_env()?;
+
+    let prompt = build_prompt(&source);
+
+    std::fs::write("_prompt_tmp.txt", &prompt)
+        .map_err(|e| format!("Failed to write temp prompt: {e}"))?;
+
+    let ai_path = find_ai_translate();
+
+    let output = if ai_path.exists() {
+        Command::new(&ai_path)
+            .output()
+            .map_err(|e| format!("Failed to run ai_translate: {e}"))?
+    } else {
+        Command::new("python")
+            .args(["ai_translate.py"])
+            .output()
+            .or_else(|_| Command::new("python3").args(["ai_translate.py"]).output())
+            .map_err(|_| "Python not found. Install Python or build ai_translate.".to_string())?
     };
 
-    let client = reqwest::blocking::Client::new();
+    let _ = std::fs::remove_file("_prompt_tmp.txt");
 
-    let response = client
-        .post(API_URL)
-        .bearer_auth(&token)
-        .json(&body)
-        .send()
-        .map_err(|e| format!("HTTP request failed: {e}"))?;
-
-    if !response.status().is_success() {
-        let status = response.status();
-        let text = response.text().unwrap_or_default();
-        return Err(format!("API error {status}: {text}"));
+    if !output.status.success() {
+        let err = String::from_utf8_lossy(&output.stderr).to_string();
+        return Err(format!("AI translation failed:\n{err}"));
     }
 
-    let parsed: Response = response
-        .json()
-        .map_err(|e| format!("Failed to parse API response: {e}"))?;
+    let result = String::from_utf8_lossy(&output.stdout).trim().to_string();
 
-    parsed
-        .choices
-        .into_iter()
-        .next()
-        .map(|c| c.message.content)
-        .ok_or_else(|| "API returned empty response".to_string())
+    if result.is_empty() {
+        return Err("AI returned empty response".to_string());
+    }
+
+    Ok(result)
 }
