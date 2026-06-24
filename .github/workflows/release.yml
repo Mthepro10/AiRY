@@ -14,11 +14,10 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      # ── Python ──────────────────────────────────────────
       - name: Install Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
@@ -28,16 +27,12 @@ jobs:
       - name: Build Python executable
         run: pyinstaller --onefile ai_translate.py
 
-      # ── Rust ────────────────────────────────────────────
       - name: Install Rust
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
+        uses: dtolnay/rust-toolchain@stable
 
       - name: Build Rust executable
         run: cargo build --release
 
-      # ── Combina intr-un singur folder ───────────────────
       - name: Package (Windows)
         if: matrix.os == 'windows-latest'
         run: |
@@ -54,9 +49,8 @@ jobs:
           cp target/release/airy release/
           cp .env.example release/
 
-      # ── Upload ──────────────────────────────────────────
       - name: Upload release
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: airy-${{ matrix.os }}
           path: release/
