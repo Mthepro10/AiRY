@@ -16,6 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # ── Python ──────────────────────────────────────────
       - name: Install Python
         uses: actions/setup-python@v5
         with:
@@ -27,18 +28,20 @@ jobs:
       - name: Build Python executable
         run: pyinstaller --onefile ai_translate.py
 
+      # ── Rust ────────────────────────────────────────────
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
 
       - name: Build Rust executable
         run: cargo build --release
 
+      # ── Combina intr-un singur folder ───────────────────
       - name: Package (Windows)
         if: matrix.os == 'windows-latest'
         run: |
           mkdir release
           copy dist\ai_translate.exe release\
-          copy target\release\airy.exe release\
+          copy target\release\AiRY.exe release\
           copy .env.example release\
 
       - name: Package (Linux/macOS)
@@ -46,9 +49,10 @@ jobs:
         run: |
           mkdir release
           cp dist/ai_translate release/
-          cp target/release/airy release/
+          cp target/release/AiRY release/
           cp .env.example release/
 
+      # ── Upload ──────────────────────────────────────────
       - name: Upload release
         uses: actions/upload-artifact@v4
         with:
