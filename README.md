@@ -3,6 +3,12 @@ A programming language that uses an AI-assisted translation layer to convert nat
 
 `Natural language -> AI translated code -> lexer -> parser -> Cranelift JIT -> output`
 
+Developers can write either:
+- AiRY Core (structured syntax)
+- Natural language instructions
+
+Both forms ultimately execute through the same runtime.
+
 ## AiRY Core
 This is the main part of the language (the actual programming). I will talk abot the syntax of the code later in the readME.
 
