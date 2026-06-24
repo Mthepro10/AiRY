@@ -1,5 +1,7 @@
 # AiRY
-A programming language that uses an AI-assisted translation layer to convert natural language-like instructions into a structured intermediate representation, which is then compiled into executable code with rust interpreter. `Natural language -> AI translated code -> lexer -> parser -> Cranelift -> output`
+A programming language that uses an AI-assisted translation layer to convert natural language-like instructions into a structured intermediate representation, which is then executed by a Rust-based interpreter.
+
+`Natural language -> AI translated code -> lexer -> parser -> Cranelift JIT -> output`
 
 ## AiRY Core
 This is the main part of the language (the actual programming). I will talk abot the syntax of the code later in the readME.
