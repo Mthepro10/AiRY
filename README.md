@@ -12,9 +12,9 @@ This is were the AI part of the programming language goes in here the user write
 
 ## syntax of AiRY Core
 
-`set` -- Declares a new dynamic variable, with an optional value. `set x 5`, `set x "Hello, World!"`, `set x 5.5`, or just `set x` to declare without assigning.
+`set` -- Declares a new dynamic variable, with an optional value. `set x 5`, `set x "Hello, World!"`, `set x 5.5`, or just `set x` to declare without assigning. Strings should always be in `""` not `''` .
 
-`=` -- (a.k.a. `set_after`) Assigns a new value to an already-declared variable. `x = 5`, `x = perform y + 2`.
+`=` -- (a.k.a. `set_after`) Assigns a new value to an already-declared variable. `x = 5`, `x = perform y + 2`. Strings should always be in `""` not `''` .
 
 `perform` -- Executes an arithmetic (`+ - * / %`), bitwise (`& | ^ ~`), or boolean (`&& || ! == != > < >= <=`) operation and returns a result that must be assigned or used. Arithmetic/bitwise/modulo operations always require `perform` (e.g. `set x perform 5 + 3`, `x = perform x & 2`, `show perform x % 2`). Boolean operations do **not** require `perform` and can be used directly in assignments or conditions (e.g. `set x 5 > 3`, `if x > 5 && y < 10 { ... }`). Parentheses are supported for grouping, e.g. `x = perform x + 1 + (1 + 1) * 8`.
 
@@ -69,6 +69,13 @@ Still searching!!!
 
 ## UNSUPPORTED THINGS THAT I WANT TO INCLUDE IN THE MAIN LIBRARY
 newline '\n', tab '\t', functions
+
+## use of tab and newline
+insted of `show "\n"` you need:
+`show "
+"`
+or instead of `show "\t"` you need:
+`show "    "`
 
 ## AI used
 So for this project I used gemma-4-31B-it, but you can also use other types of agents, cus the prompt isn't made especially for gemma. But be aware that using huggingface consumes a number of your monthly credits from your account. That is why on the future I want to create a AI specially designed for this programming language and free for all.
