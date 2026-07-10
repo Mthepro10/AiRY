@@ -86,7 +86,7 @@ or instead of `show "\t"` you need:
 `show "    "`
 
 ## AI used
-So for this project I used gemma-4-31B-it, but you can also use other types of agents, cus the prompt isn't made especially for gemma. But be aware that using huggingface consumes a number of your monthly credits from your account. That is why on the future I want to create a AI specially designed for this programming language and free for all.
+So for this project I used "Tencent: Hy3", but you can also use other types of agents, cus the prompt isn't made especially for Hy3. The model is free and used with ai.hackclub.com api. On the future I want to create a AI specially designed for this programming language and free for all.
 
 ## Example of AiRY and AiRY Core translation
 
