@@ -29,14 +29,14 @@ fn find_ai_translate() -> std::path::PathBuf {
 
 fn check_env() -> Result<(), String> {
     let env = std::fs::read_to_string(".env")
-        .map_err(|_| ".env file not found — create one with HF_TOKEN=hf_xxx".to_string())?;
+        .map_err(|_| ".env file not found — create one with HACKCLUB_API_KEY=your_token_here".to_string())?;
 
     let has_token = env.lines().any(|l| {
-        l.starts_with("HF_TOKEN=") && l.len() > "HF_TOKEN=".len()
+        l.starts_with("HACKCLUB_API_KEY=") && l.len() > "HACKCLUB_API_KEY=".len()
     });
 
     if !has_token {
-        return Err("HF_TOKEN not found or empty in .env".to_string());
+        return Err("HACKCLUB_API_KEY not found or empty in .env".to_string());
     }
 
     Ok(())
