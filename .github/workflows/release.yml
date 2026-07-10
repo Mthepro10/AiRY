@@ -23,7 +23,7 @@ jobs:
           python-version: "3.11"
 
       - name: Install Python dependencies
-        run: pip install pyinstaller huggingface_hub python-dotenv
+        run: pip install pyinstaller
 
       - name: Build Python executable
         run: pyinstaller --onefile ai_translate.py
